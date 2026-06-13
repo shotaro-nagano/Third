@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Third — 企画書</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#15110D; --char:#241E18; --char-2:#2E2720;
+    --amber:#D89A4E; --amber-soft:#E6B978; --cream:#F2E4CC; --cream-dim:#C9B89B;
+    --copper:#A85838; --muted:#8A7A66;
+    --line:rgba(216,154,78,.16); --line-soft:rgba(242,228,204,.08);
+    --mincho:'Shippori Mincho',serif; --gothic:'Zen Kaku Gothic New',sans-serif;
+    --ok:#7FB069; --warn:#E6B978; --crit:#C77B5A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  body{background:#0B0907;color:var(--cream);font-family:var(--gothic);-webkit-font-smoothing:antialiased;
+    line-height:1.7;overflow-x:hidden;}
+  svg{display:block;}
+  em{font-style:normal;color:var(--amber);}
+  @keyframes flicker{0%,100%{opacity:1;}48%{opacity:.92;}50%{opacity:.7;}52%{opacity:.95;}}
+  @keyframes breathe{0%,100%{opacity:.25;}50%{opacity:.8;}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;}}
+
+  /* ===== 横断レイアウト ===== */
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px;}
+  section{padding:64px 0;border-top:1px solid var(--line-soft);}
+  section:first-of-type{border-top:none;}
+  .eyebrow{display:flex;align-items:center;gap:10px;font-family:var(--mincho);font-size:12px;
+    letter-spacing:.34em;color:var(--muted);text-indent:.34em;margin-bottom:20px;}
+  .eyebrow .no{color:var(--amber);font-weight:700;}
+  .eyebrow .bar{flex:1;height:1px;background:var(--line-soft);}
+  h2.sec{font-family:var(--mincho);font-weight:800;font-size:clamp(26px,5vw,38px);line-height:1.4;
+    letter-spacing:.04em;color:var(--cream);margin-bottom:18px;}
+  h3.sub{font-family:var(--mincho);font-weight:700;font-size:18px;letter-spacing:.06em;
+    color:var(--amber-soft);margin:34px 0 14px;}
+  p.lead{font-size:15px;line-height:2.05;color:var(--cream-dim);letter-spacing:.02em;}
+  p.body{font-size:14px;line-height:2;color:var(--cream-dim);letter-spacing:.01em;margin-bottom:12px;}
+  .lantern{width:9px;height:9px;border-radius:50%;background:var(--amber);
+    box-shadow:0 0 8px 1px rgba(216,154,78,.7);animation:flicker 4s ease-in-out infinite;display:inline-block;}
+
+  /* ===== ヒーロー ===== */
+  .hero{min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:60px 22px;position:relative;overflow:hidden;border-top:none;}
+  .hero::before{content:"";position:absolute;top:-10%;left:50%;transform:translateX(-50%);
+    width:680px;height:680px;border-radius:50%;
+    background:radial-gradient(circle,rgba(216,154,78,.13),transparent 62%);pointer-events:none;}
+  .hero .mark{display:inline-flex;align-items:center;gap:11px;margin-bottom:30px;position:relative;}
+  .hero .mark .lantern{width:14px;height:14px;}
+  .hero .mark span{font-family:var(--mincho);font-weight:700;font-size:16px;letter-spacing:.46em;
+    color:var(--cream-dim);text-indent:.46em;}
+  .hero h1{font-family:var(--mincho);font-weight:800;font-size:clamp(36px,9vw,62px);line-height:1.3;
+    letter-spacing:.05em;color:var(--cream);position:relative;}
+  .hero p.tag{margin-top:26px;font-size:15px;line-height:2.1;color:var(--cream-dim);
+    letter-spacing:.04em;position:relative;max-width:520px;}
+  .hero .meta{margin-top:40px;display:flex;gap:26px;flex-wrap:wrap;justify-content:center;position:relative;}
+  .hero .meta div{font-size:11px;letter-spacing:.1em;color:var(--muted);}
+  .hero .meta b{display:block;font-family:var(--mincho);color:var(--amber-soft);font-size:13px;
+    font-weight:600;margin-bottom:5px;letter-spacing:.08em;}
+  .hero .scroll-cue{margin-top:46px;width:1px;height:54px;
+    background:linear-gradient(var(--amber),transparent);opacity:.6;position:relative;}
+
+  /* ===== 端末プレビュー ===== */
+  .deck{display:flex;flex-wrap:wrap;gap:36px 24px;justify-content:center;align-items:flex-start;margin-top:14px;}
+  .frame-wrap{display:flex;flex-direction:column;align-items:center;gap:13px;}
+  .frame-label{font-family:var(--mincho);font-size:11px;letter-spacing:.28em;color:var(--muted);text-indent:.28em;}
+  .frame-label b{color:var(--amber-soft);font-weight:600;}
+  .phone{width:284px;height:606px;border-radius:40px;padding:9px;
+    background:linear-gradient(160deg,#3a322a,#15110D 40%);
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.8),0 0 0 1px rgba(216,154,78,.1),inset 0 1px 1px rgba(242,228,204,.12);}
+  .screen{position:relative;width:100%;height:100%;border-radius:32px;overflow:hidden;
+    background:radial-gradient(120% 80% at 50% -10%,#241E18 0%,#15110D 55%,#0B0907 100%);
+    display:flex;flex-direction:column;}
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:112px;height:22px;
+    background:#0B0907;border-radius:0 0 15px 15px;z-index:40;}
+  .statusbar{height:36px;display:flex;align-items:flex-end;justify-content:space-between;
+    padding:0 20px 4px;font-size:10px;color:var(--cream-dim);font-weight:500;flex-shrink:0;z-index:20;}
+  .statusbar .dots{display:flex;gap:3px;align-items:center;}
+  .statusbar .dots i{width:4px;height:4px;border-radius:50%;background:var(--cream-dim);display:block;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 18px 13px;flex-shrink:0;}
+  .topbar .here{display:flex;align-items:center;gap:8px;font-family:var(--mincho);font-weight:600;
+    font-size:12px;letter-spacing:.14em;color:var(--cream);}
+  .topbar .ic{width:29px;height:29px;border-radius:50%;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;color:var(--cream-dim);}
+  .topbar .ic svg{width:16px;height:16px;}
+  .pbody{flex:1;overflow:hidden;position:relative;}
+  .tabbar{flex-shrink:0;height:58px;border-top:1px solid var(--line-soft);
+    display:flex;align-items:center;justify-content:space-around;padding-bottom:7px;
+    background:rgba(11,9,7,.6);backdrop-filter:blur(8px);}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:8.5px;letter-spacing:.1em;color:var(--muted);}
+  .tab svg{width:20px;height:20px;}
+  .tab.on{color:var(--amber);}
+
+  .home-scroll{padding:4px 18px 14px;height:100%;overflow:hidden;}
+  .home-lead{font-family:var(--mincho);font-size:16px;line-height:1.7;color:var(--cream);letter-spacing:.04em;}
+  .home-sub{font-size:10.5px;color:var(--muted);letter-spacing:.06em;margin-bottom:18px;}
+  .haunt{position:relative;border-radius:17px;padding:16px 16px 14px;margin-bottom:13px;overflow:hidden;
+    border:1px solid var(--line);background:linear-gradient(150deg,rgba(46,39,32,.9),rgba(21,17,13,.6));}
+  .haunt.lit::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(80% 120% at 84% 12%,rgba(216,154,78,.22),transparent 60%);}
+  .haunt .r1{position:relative;z-index:2;}
+  .haunt h4{font-family:var(--mincho);font-weight:700;font-size:15px;letter-spacing:.05em;color:var(--cream);}
+  .haunt .m{font-size:9.5px;color:var(--muted);margin-top:5px;letter-spacing:.07em;}
+  .lamp-row{display:flex;align-items:center;gap:5px;margin-top:13px;position:relative;z-index:2;}
+  .lamp{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 7px 1px rgba(216,154,78,.6);}
+  .lamp.off{background:rgba(138,122,102,.4);box-shadow:none;}
+  .lamp-cap{margin-left:7px;font-size:9.5px;color:var(--amber-soft);letter-spacing:.04em;}
+  .lamp-cap.dim{color:var(--muted);}
+  .haunt .badge{position:absolute;top:15px;right:15px;z-index:3;font-size:8.5px;letter-spacing:.14em;
+    font-family:var(--mincho);font-weight:600;color:var(--ink);background:var(--amber);padding:3px 9px;border-radius:20px;}
+
+  .inn{height:100%;display:flex;flex-direction:column;}
+  .inn-hd{padding:0 20px 12px;text-align:center;}
+  .inn-hd .st{display:inline-flex;align-items:center;gap:7px;font-size:9.5px;letter-spacing:.1em;
+    color:var(--amber-soft);border:1px solid var(--line);border-radius:20px;padding:4px 13px;}
+  .inn-hd .st .lantern{width:7px;height:7px;}
+  .inn-stage{flex:1;position:relative;overflow:hidden;}
+  .counter-cap{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:140%;height:60%;
+    border-radius:50% 50% 0 0;background:linear-gradient(180deg,rgba(46,39,32,0),rgba(46,39,32,.55));border-top:1px solid var(--line);}
+  .seat{position:absolute;display:flex;flex-direction:column;align-items:center;gap:5px;}
+  .seat .av{width:43px;height:43px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mincho);font-weight:600;font-size:14px;color:var(--cream);
+    background:linear-gradient(150deg,var(--char-2),var(--char));border:1px solid var(--line);position:relative;}
+  .seat .av .glow{position:absolute;inset:-3px;border-radius:50%;
+    box-shadow:0 0 14px 3px rgba(216,154,78,.45);opacity:0;animation:breathe 5s ease-in-out infinite;}
+  .seat.me .av{background:linear-gradient(150deg,var(--amber),var(--copper));color:var(--ink);border-color:var(--amber-soft);}
+  .seat .nm{font-size:9px;color:var(--cream-dim);letter-spacing:.05em;}
+  .seat .yrs{font-size:7.5px;color:var(--muted);}
+  .hint{position:absolute;left:0;right:0;bottom:13px;text-align:center;font-size:9.5px;color:var(--muted);letter-spacing:.08em;}
+
+  .dim-bg{position:absolute;inset:0;background:rgba(5,4,3,.66);}
+  .sheet{position:absolute;left:0;right:0;bottom:0;border-radius:24px 24px 0 0;
+    background:linear-gradient(180deg,#2E2720,#15110D);border-top:1px solid var(--line);
+    padding:9px 22px 24px;box-shadow:0 -20px 50px rgba(0,0,0,.6);}
+  .sheet .grip{width:36px;height:4px;border-radius:4px;background:rgba(242,228,204,.2);margin:0 auto 20px;}
+  .sheet .who{display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .sheet .who .av{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mincho);font-weight:600;font-size:20px;color:var(--cream);
+    background:linear-gradient(150deg,var(--char-2),var(--char));border:1px solid var(--line);
+    box-shadow:0 0 20px 4px rgba(216,154,78,.3);}
+  .sheet .who .nm{font-family:var(--mincho);font-weight:700;font-size:17px;letter-spacing:.08em;}
+  .sheet .who .tag{font-size:9.5px;color:var(--amber-soft);letter-spacing:.08em;}
+  .sheet .sl{text-align:center;font-size:11px;color:var(--cream-dim);line-height:1.9;margin:13px 0 18px;}
+  .signal-btn{width:100%;padding:15px;border-radius:15px;border:none;cursor:pointer;
+    font-family:var(--mincho);font-weight:700;font-size:14px;letter-spacing:.14em;color:var(--ink);
+    background:linear-gradient(120deg,var(--amber-soft),var(--amber));box-shadow:0 8px 24px -6px rgba(216,154,78,.5);}
+  .signal-note{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:13px;
+    font-size:9.5px;color:var(--muted);letter-spacing:.04em;}
+  .signal-note svg{width:12px;height:12px;flex-shrink:0;}
+  .signal-quota{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:15px;}
+  .signal-quota .q{width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 6px rgba(216,154,78,.6);}
+  .signal-quota .q.spent{background:rgba(138,122,102,.4);box-shadow:none;}
+  .signal-quota span{font-size:8.5px;color:var(--muted);letter-spacing:.08em;margin-left:4px;}
+
+  .creed{padding:6px 22px;height:100%;display:flex;flex-direction:column;}
+  .creed .ct{font-family:var(--mincho);font-weight:700;font-size:14px;letter-spacing:.18em;
+    color:var(--cream);text-align:center;margin-bottom:18px;}
+  .ring-wrap{display:flex;flex-direction:column;align-items:center;gap:7px;}
+  .ring-cap{font-family:var(--mincho);font-size:12.5px;color:var(--amber-soft);letter-spacing:.1em;}
+  .ring-sub{font-size:9.5px;color:var(--muted);letter-spacing:.05em;}
+  .timeline{margin-top:20px;}
+  .tl{display:flex;gap:13px;}
+  .tl .dc{display:flex;flex-direction:column;align-items:center;}
+  .tl .d{width:11px;height:11px;border-radius:50%;border:1px solid var(--amber);flex-shrink:0;margin-top:3px;}
+  .tl .d.fill{background:var(--amber);box-shadow:0 0 8px 1px rgba(216,154,78,.5);}
+  .tl .ln{width:1px;flex:1;background:var(--line);min-height:24px;}
+  .tl .tx{padding-bottom:16px;}
+  .tl .tx b{display:block;font-family:var(--mincho);font-weight:600;font-size:12.5px;color:var(--cream);letter-spacing:.04em;margin-bottom:3px;}
+  .tl .tx span{font-size:9.5px;color:var(--muted);line-height:1.7;letter-spacing:.02em;}
+  .creed-foot{margin-top:auto;border-top:1px solid var(--line-soft);padding-top:14px;text-align:center;}
+  .creed-foot p{font-family:var(--mincho);font-size:11px;line-height:2;color:var(--cream-dim);letter-spacing:.04em;}
+
+  /* ===== コンテンツ部品 ===== */
+  .pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.08em;
+    border:1px solid var(--line);border-radius:20px;padding:5px 13px;color:var(--cream-dim);
+    background:rgba(46,39,32,.4);margin:0 6px 8px 0;}
+  .pill.ok{border-color:rgba(127,176,105,.4);color:var(--ok);}
+  .quote{font-family:var(--mincho);font-weight:600;font-size:clamp(18px,3.6vw,24px);line-height:1.85;
+    letter-spacing:.05em;color:var(--cream);padding:22px 26px;border-left:2px solid var(--amber);
+    background:linear-gradient(120deg,rgba(216,154,78,.07),transparent);border-radius:0 14px 14px 0;margin:8px 0;}
+
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13px;}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;letter-spacing:.01em;}
+  th{font-family:var(--mincho);font-weight:600;color:var(--amber-soft);font-size:12px;letter-spacing:.08em;
+    border-bottom:1px solid var(--line);}
+  td{color:var(--cream-dim);line-height:1.7;}
+  td b,th b{color:var(--cream);font-weight:500;}
+  .tg{font-size:10px;letter-spacing:.1em;padding:3px 9px;border-radius:6px;font-weight:500;white-space:nowrap;
+    font-family:var(--gothic);}
+  .tg.fix{background:rgba(127,176,105,.16);color:var(--ok);}
+  .tg.rec{background:rgba(230,185,120,.16);color:var(--warn);}
+  .tg.und{background:rgba(199,123,90,.18);color:var(--crit);}
+  .tg.p0{background:rgba(216,154,78,.2);color:var(--amber-soft);}
+  .tg.p1{background:rgba(216,154,78,.1);color:var(--cream-dim);}
+  .tg.p2{background:rgba(138,122,102,.18);color:var(--muted);}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:8px 0;}
+  .card{border:1px solid var(--line);border-radius:16px;padding:20px 22px;
+    background:linear-gradient(150deg,rgba(46,39,32,.6),rgba(21,17,13,.4));position:relative;overflow:hidden;}
+  .card .ci{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    background:rgba(216,154,78,.14);color:var(--amber);margin-bottom:14px;}
+  .card .ci svg{width:19px;height:19px;}
+  .card h4{font-family:var(--mincho);font-weight:700;font-size:15px;letter-spacing:.04em;color:var(--cream);margin-bottom:8px;}
+  .card p{font-size:12.5px;line-height:1.85;color:var(--muted);letter-spacing:.01em;}
+
+  .flow{display:flex;flex-direction:column;gap:0;margin:14px 0;}
+  .fstep{display:flex;gap:16px;}
+  .fstep .dc{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+  .fstep .n{width:32px;height:32px;border-radius:50%;border:1px solid var(--amber);
+    display:flex;align-items:center;justify-content:center;font-family:var(--mincho);font-weight:700;
+    font-size:14px;color:var(--amber);background:rgba(216,154,78,.08);}
+  .fstep:last-child .n{background:var(--amber);color:var(--ink);}
+  .fstep .ln{width:1px;flex:1;background:var(--line);min-height:18px;margin:4px 0;}
+  .fstep .tx{padding-bottom:22px;padding-top:4px;}
+  .fstep .tx b{display:block;font-family:var(--mincho);font-weight:600;font-size:15px;color:var(--cream);
+    letter-spacing:.04em;margin-bottom:5px;}
+  .fstep .tx span{font-size:13px;color:var(--muted);line-height:1.8;letter-spacing:.01em;}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+  .col-do,.col-dont{border-radius:14px;padding:18px 20px;}
+  .col-do{border:1px solid rgba(127,176,105,.3);background:rgba(127,176,105,.05);}
+  .col-dont{border:1px solid rgba(199,123,90,.3);background:rgba(199,123,90,.05);}
+  .col-do h5,.col-dont h5{font-family:var(--mincho);font-size:13px;letter-spacing:.1em;margin-bottom:12px;font-weight:600;}
+  .col-do h5{color:var(--ok);}.col-dont h5{color:var(--crit);}
+  .col-do li,.col-dont li{list-style:none;font-size:12.5px;line-height:1.6;color:var(--cream-dim);
+    padding:6px 0 6px 18px;position:relative;}
+  .col-do li::before{content:"";position:absolute;left:0;top:13px;width:6px;height:6px;border-radius:50%;background:var(--ok);}
+  .col-dont li::before{content:"";position:absolute;left:0;top:13px;width:6px;height:6px;border-radius:50%;background:var(--crit);}
+
+  .safety{display:flex;flex-direction:column;gap:14px;margin:8px 0;}
+  .slayer{border:1px solid var(--line);border-radius:16px;padding:20px 22px;
+    background:linear-gradient(150deg,rgba(46,39,32,.55),rgba(21,17,13,.35));display:flex;gap:18px;align-items:flex-start;}
+  .slayer .num{font-family:var(--mincho);font-weight:800;font-size:34px;color:rgba(216,154,78,.35);flex-shrink:0;line-height:1;}
+  .slayer h4{font-family:var(--mincho);font-weight:700;font-size:16px;color:var(--cream);letter-spacing:.04em;margin-bottom:8px;}
+  .slayer p{font-size:13px;line-height:1.9;color:var(--muted);letter-spacing:.01em;}
+
+  .kpi{border:1px solid var(--amber);border-radius:16px;padding:26px;text-align:center;
+    background:radial-gradient(120% 140% at 50% 0%,rgba(216,154,78,.12),transparent 70%);margin:8px 0 20px;}
+  .kpi .lbl{font-size:11px;letter-spacing:.16em;color:var(--muted);margin-bottom:12px;}
+  .kpi .star{font-family:var(--mincho);font-weight:700;font-size:clamp(17px,3.4vw,22px);line-height:1.7;
+    color:var(--cream);letter-spacing:.04em;}
+
+  .todo{list-style:none;}
+  .todo li{font-size:13px;line-height:1.8;color:var(--cream-dim);padding:10px 0 10px 26px;position:relative;
+    border-bottom:1px solid var(--line-soft);}
+  .todo li::before{content:"";position:absolute;left:4px;top:16px;width:9px;height:9px;border-radius:2px;
+    border:1px solid var(--amber);}
+
+  .footer{text-align:center;padding:60px 22px 80px;border-top:1px solid var(--line-soft);}
+  .footer .lantern{width:13px;height:13px;margin-bottom:18px;}
+  .footer p{font-family:var(--mincho);font-size:13px;line-height:2;color:var(--muted);letter-spacing:.06em;}
+  .footer .big{font-size:18px;color:var(--cream-dim);margin-bottom:8px;}
+
+  .swatches{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;}
+  .sw{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--cream-dim);letter-spacing:.05em;
+    border:1px solid var(--line-soft);border-radius:20px;padding:6px 14px 6px 7px;}
+  .sw i{width:15px;height:15px;border-radius:50%;display:block;}
+
+  @media(max-width:680px){
+    .split{grid-template-columns:1fr;}
+    .slayer{flex-direction:column;gap:8px;}
+    .slayer .num{font-size:28px;}
+    table{font-size:12px;}th,td{padding:9px 8px;}
+    .phone{width:270px;height:580px;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== ヒーロー ===================== -->
+  <header class="hero">
+    <div class="mark"><span class="lantern"></span><span>THIRD</span></div>
+    <h1>行きつけにいる間だけ、<br><em>常連</em>と知り合える。</h1>
+    <p class="tag">盛らない。追ってこない。店を出れば、関係はそっと消える。<br>サードプレイスの常連関係を、そのままデジタルに。</p>
+    <div class="meta">
+      <div><b>企画書</b>要件定義 ＋ デザイン</div>
+      <div><b>対象</b>スマホ優先 / Web・iOS・Windows</div>
+      <div><b>版</b>MVP v0.1</div>
+    </div>
+    <div class="scroll-cue"></div>
+  </header>
+
+  <!-- ===================== デザインプレビュー ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow"><span class="no">design</span><span>カウンターの灯り</span><span class="bar"></span></div>
+      <h2 class="sec">薄暗い店内に、<em>灯り</em>だけが浮かぶ。</h2>
+      <p class="lead">青や緑のSNSにも、安易なネオン夜景にも逃げない。墨色の闇にウイスキーの琥珀がともる、和の止まり木のような佇まい。シグネチャーは「灯り」── 常連がいる店は明るく灯り、誰もいない店は暗い。光が、そのまま人の気配を語る。</p>
+
+      <div class="deck">
+        <!-- 01 ホーム -->
+        <div class="frame-wrap">
+          <div class="frame-label"><b>01</b>　行きつけの灯り</div>
+          <div class="phone"><div class="screen"><div class="notch"></div>
+            <div class="statusbar"><span>21:48</span><span class="dots"><i></i><i></i><i></i></span></div>
+            <div class="topbar"><div class="here"><span class="lantern"></span>あなたの止まり木</div>
+              <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div></div>
+            <div class="pbody"><div class="home-scroll">
+              <div class="home-lead">今夜、<em>灯っている</em>店。</div>
+              <div class="home-sub">常連がいる店ほど、明るく見える</div>
+              <div class="haunt lit"><span class="badge">常連</span><div class="r1"><h4>立ち呑み　燈</h4><div class="m">徒歩4分 ・ 今いる常連 5人</div></div>
+                <div class="lamp-row"><span class="lamp"></span><span class="lamp"></span><span class="lamp"></span><span class="lamp"></span><span class="lamp"></span><span class="lamp-cap">今夜は賑わってる</span></div></div>
+              <div class="haunt lit"><span class="badge">常連</span><div class="r1"><h4>角打ち　二合半</h4><div class="m">徒歩9分 ・ 今いる常連 2人</div></div>
+                <div class="lamp-row"><span class="lamp"></span><span class="lamp"></span><span class="lamp off"></span><span class="lamp off"></span><span class="lamp off"></span><span class="lamp-cap">静かな夜</span></div></div>
+              <div class="haunt"><div class="r1"><h4>スタンド　よあけ</h4><div class="m">あと2回通えば常連 ・ 消灯中</div></div>
+                <div class="lamp-row"><span class="lamp off"></span><span class="lamp off"></span><span class="lamp off"></span><span class="lamp-cap dim">誰もいない</span></div></div>
+            </div></div>
+            <div class="tabbar">
+              <div class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-7h6v7"/></svg>止まり木</div>
+              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>さがす</div>
+              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>履歴</div>
+            </div>
+          </div></div>
+        </div>
+        <!-- 02 店内 -->
+        <div class="frame-wrap">
+          <div class="frame-label"><b>02</b>　今、この店にいる常連</div>
+          <div class="phone"><div class="screen"><div class="notch"></div>
+            <div class="statusbar"><span>21:52</span><span class="dots"><i></i><i></i><i></i></span></div>
+            <div class="topbar"><div class="here"><span class="lantern"></span>立ち呑み　燈</div>
+              <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/></svg></div></div>
+            <div class="pbody"><div class="inn">
+              <div class="inn-hd"><div class="st"><span class="lantern"></span>チェックイン中 ・ 21:34〜</div></div>
+              <div class="inn-stage"><div class="counter-cap"></div>
+                <div class="seat" style="top:14%;left:15%;"><div class="av">ケ<span class="glow" style="animation-delay:.2s"></span></div><div class="nm">ケンジ</div><div class="yrs">常連2年</div></div>
+                <div class="seat" style="top:7%;left:50%;transform:translateX(-50%);"><div class="av">ミ<span class="glow" style="animation-delay:1.1s"></span></div><div class="nm">ミドリ</div><div class="yrs">常連8ヶ月</div></div>
+                <div class="seat" style="top:14%;right:15%;"><div class="av">タ<span class="glow" style="animation-delay:2s"></span></div><div class="nm">タケ</div><div class="yrs">常連1年</div></div>
+                <div class="seat" style="top:40%;left:12%;"><div class="av">ノ<span class="glow" style="animation-delay:.7s"></span></div><div class="nm">ノブ</div><div class="yrs">常連3年</div></div>
+                <div class="seat" style="top:40%;right:12%;"><div class="av">サ<span class="glow" style="animation-delay:1.6s"></span></div><div class="nm">サチ</div><div class="yrs">常連半年</div></div>
+                <div class="seat me" style="bottom:12%;left:50%;transform:translateX(-50%);"><div class="av">あ</div><div class="nm" style="color:var(--amber-soft)">あなた</div><div class="yrs">常連1年2ヶ月</div></div>
+                <div class="hint">気になる人をそっと選んで、合図を</div>
+              </div>
+            </div></div>
+            <div class="tabbar">
+              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-7h6v7"/></svg>止まり木</div>
+              <div class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>店内</div>
+              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>履歴</div>
+            </div>
+          </div></div>
+        </div>
+        <!-- 03 合図 -->
+        <div class="frame-wrap">
+          <div class="frame-label"><b>03</b>　ゆるい合図を、ひとつ</div>
+          <div class="phone"><div class="screen"><div class="notch"></div>
+            <div class="statusbar" style="z-index:5"><span>21:53</span><span class="dots"><i></i><i></i><i></i></span></div>
+            <div class="pbody" style="position:relative"><div class="dim-bg"></div>
+              <div class="sheet"><div class="grip"></div>
+                <div class="who"><div class="av">ミ</div><div class="nm">ミドリ</div><div class="tag">この店の常連 ・ 8ヶ月</div></div>
+                <div class="sl">声をかける代わりに、<br>小さな合図をひとつ送れます。</div>
+                <button class="signal-btn">乾杯しませんか</button>
+                <div class="signal-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>片方向。返事がなくても、誰にも分かりません</div>
+                <div class="signal-quota"><span class="q"></span><span class="q spent"></span><span>今夜あと1回</span></div>
+              </div>
+            </div>
+            <div class="tabbar" style="z-index:5">
+              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-7h6v7"/></svg>止まり木</div>
+              <div class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>店内</div>
+              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>履歴</div>
+            </div>
+          </div></div>
+        </div>
+        <!-- 04 常連の証 -->
+        <div class="frame-wrap">
+          <div class="frame-label"><b>04</b>　通った時間が、信頼になる</div>
+          <div class="phone"><div class="screen"><div class="notch"></div>
+            <div class="statusbar"><span>22:01</span><span class="dots"><i></i><i></i><i></i></span></div>
+            <div class="topbar"><div class="here"><span class="lantern"></span>スタンド　よあけ</div>
+              <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M18 8A6 6 0 1 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div></div>
+            <div class="pbody"><div class="creed">
+              <div class="ct">常連まで、あと一歩</div>
+              <div class="ring-wrap">
+                <svg width="138" height="138" viewBox="0 0 150 150">
+                  <circle cx="75" cy="75" r="62" fill="none" stroke="rgba(216,154,78,.14)" stroke-width="5"/>
+                  <circle cx="75" cy="75" r="62" fill="none" stroke="url(#g)" stroke-width="5" stroke-linecap="round" stroke-dasharray="389.5" stroke-dashoffset="78" transform="rotate(-90 75 75)"/>
+                  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6B978"/><stop offset="1" stop-color="#A85838"/></linearGradient></defs>
+                  <text x="75" y="70" text-anchor="middle" fill="#F2E4CC" font-family="'Shippori Mincho',serif" font-weight="700" font-size="34">4</text>
+                  <text x="75" y="92" text-anchor="middle" fill="#8A7A66" font-size="10" letter-spacing="2">/ 5 回</text>
+                </svg>
+                <div class="ring-cap">別々の日に、あと1回</div>
+                <div class="ring-sub">急いで通っても近道はない。それでいい。</div>
+              </div>
+              <div class="timeline">
+                <div class="tl"><div class="dc"><span class="d fill"></span><span class="ln"></span></div><div class="tx"><b>1〜4回目</b><span>別々の夜に、ちゃんと飲んだ記録</span></div></div>
+                <div class="tl"><div class="dc"><span class="d"></span></div><div class="tx"><b>5回目で「常連」に</b><span>通い続けた事実だけが、ここでの信頼になる</span></div></div>
+              </div>
+              <div class="creed-foot"><p>つながるのは、店にいる間だけ。<br><em>店を出れば、また今度ね。</em></p></div>
+            </div></div>
+            <div class="tabbar">
+              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-7h6v7"/></svg>止まり木</div>
+              <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>店内</div>
+              <div class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>履歴</div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="swatches" style="margin-top:34px;justify-content:center;">
+        <div class="sw"><i style="background:#15110D;border:1px solid rgba(216,154,78,.2)"></i>墨色の闇</div>
+        <div class="sw"><i style="background:#241E18"></i>炭</div>
+        <div class="sw"><i style="background:#D89A4E"></i>ウイスキーの琥珀</div>
+        <div class="sw"><i style="background:#F2E4CC"></i>灯火のクリーム</div>
+        <div class="sw"><i style="background:#A85838"></i>赤銅</div>
+      </div>
+      <p class="body" style="text-align:center;color:var(--muted);">見出しは明朝体で品格を、本文は端正なゴシックで可読性を。本実装はFlutterで全プラットフォーム単一コードベースを想定。上はその世界観プロトタイプ。</p>
+    </div>
+  </section>
+
+  <!-- ===================== 背景と課題 ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow"><span class="no">01</span><span>背景と課題</span><span class="bar"></span></div>
+      <h2 class="sec">居場所が、消えつつある。</h2>
+      <p class="lead">家でも職場でもない第三の居場所＝サードプレイス。かつて行きつけの店には、深く話すわけではないが顔見知りで、行けば誰かがいる、というゆるい常連関係があった。この「気楽な常連関係」は、既存のSNSでもグループチャットでも再現できていない。</p>
+      <h3 class="sub">既存SNSの構造的な問題</h3>
+      <div class="cards">
+        <div class="card"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h4>映える圧力</h4><p>投稿が「観客」に向いており、盛る・演じる圧力から逃れられない。</p></div>
+        <div class="card"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 17H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4l-3 3z"/></svg></div>
+          <h4>つながりっぱなし</h4><p>関係が永続し、距離を置きづらい。一度つながると追ってくる。</p></div>
+        <div class="card"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg></div>
+          <h4>本物の希少化</h4><p>生成AIでコンテンツと偽アカウントが無限に。「実際に会った」事実の価値が上がっている。</p></div>
+      </div>
+      <h3 class="sub">なぜ、今か</h3>
+      <p class="body">孤独・サードプレイス喪失が都市生活者の本物の痛みとして広がっている。生成AI時代に「実在する人間が、実際に同じ場所にいた」という事実の価値が相対的に上がる。そして巨大SNSは広告＝無限フィード依存ゆえ、「閉じた・その場限り・少人数」へ全振りできない ── 構造的に追随しづらい領域がここにある。</p>
+      <div class="quote">行きつけの立ち飲み屋にいる間だけ、同じ店に通い続けた常連同士が、ゆるい合図で知り合えるSNS。店を出れば、関係はリセットされる。</div>
+    </div>
+  </section>
+
+  <!-- ===================== 設計の背骨 ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow"><span class="no">02</span><span>設計の背骨</span><span class="bar"></span></div>
+      <h2 class="sec">すべての選択が、<em>一点</em>を向く。</h2>
+      <p class="lead">壁打ちで確定した、設計のすべてが従う原則。場所主軸・常連限定・その場限り・片方向の合図 ── 要素が全部「気軽だけど安全な常連の場」という一点に向かって整列している。「つながりっぱなしのSNS」への、構造的なアンチテーゼ。</p>
+      <table>
+        <thead><tr><th style="width:30%">項目</th><th>決定</th><th style="width:88px">確度</th></tr></thead>
+        <tbody>
+          <tr><td><b>主軸</b></td><td>場所主軸（行きつけの場所が「部屋」になる）</td><td><span class="tg fix">確定</span></td></tr>
+          <tr><td><b>最初の舞台</b></td><td>ワイワイ系の立ち飲み屋（1店舗・1エリアから）</td><td><span class="tg fix">確定</span></td></tr>
+          <tr><td><b>関係の温度</b></td><td>実際に知り合う（会話・関係発展まで許容）</td><td><span class="tg fix">確定</span></td></tr>
+          <tr><td><b>つながりの媒介</b></td><td>共通の行動（「人」を直接の入口にしない）</td><td><span class="tg fix">確定</span></td></tr>
+          <tr><td><b>マスター</b></td><td>容認（必須ではないが、参加したい店には場を開放）</td><td><span class="tg fix">確定</span></td></tr>
+          <tr><td><b>料金</b></td><td>導入は無料</td><td><span class="tg fix">確定</span></td></tr>
+          <tr><td><b>常連の認定</b></td><td>別々の日に5回・各回一定時間以上の滞在</td><td><span class="tg fix">確定</span></td></tr>
+          <tr><td><b>関係の永続性</b></td><td>その場限り（店を出ると関係はリセット）</td><td><span class="tg fix">確定</span></td></tr>
+          <tr><td><b>コア体験</b></td><td>今いる常連が見える ＋ ゆるい合図（片方向・上限つき）</td><td><span class="tg fix">確定</span></td></tr>
+          <tr><td><b>立ち上げ</b></td><td>一店舗に集中投入（リアル声かけ＋マスター後押し＋SNS告知）</td><td><span class="tg fix">確定</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== コア体験 ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow"><span class="no">03</span><span>コア体験</span><span class="bar"></span></div>
+      <h2 class="sec">店に入って、出るまで。</h2>
+      <div class="flow">
+        <div class="fstep"><div class="dc"><div class="n">1</div><div class="ln"></div></div><div class="tx"><b>チェックイン</b><span>店に着いてアプリを開く。位置情報で「今この店にいる」が記録される。</span></div></div>
+        <div class="fstep"><div class="dc"><div class="n">2</div><div class="ln"></div></div><div class="tx"><b>常連が見える</b><span>今その店にいる常連がゆるく一覧表示。「こっそりチェックイン」を選べば、自分は載らず見るだけにできる。</span></div></div>
+        <div class="fstep"><div class="dc"><div class="n">3</div><div class="ln"></div></div><div class="tx"><b>ゆるい合図</b><span>気になった常連に「乾杯しませんか」のような軽い合図を送れる。片方向。一晩に送れるのは1〜2回まで。</span></div></div>
+        <div class="fstep"><div class="dc"><div class="n">4</div><div class="ln"></div></div><div class="tx"><b>現実で合流</b><span>同じ店の中。あとは目を合わせて隣へ。会話そのものは現実に明け渡す。</span></div></div>
+        <div class="fstep"><div class="dc"><div class="n">5</div></div><div class="tx"><b>店を出たら切れる</b><span>その場限り。やりとりは残らない。また同じ店で会えば再開する。</span></div></div>
+      </div>
+      <h3 class="sub">体験の境界</h3>
+      <div class="split">
+        <div class="col-do"><h5>やること</h5><ul>
+          <li>今この店に、どんな常連がいるかを見せる</li>
+          <li>知り合う「きっかけのひと押し」を提供する</li>
+          <li>通い続けた履歴を「常連」という信頼に変える</li>
+        </ul></div>
+        <div class="col-dont"><h5>やらないこと（MVP）</h5><ul>
+          <li>店外・営業時間外の個別メッセージ</li>
+          <li>フォロワー数・いいね数・公開プロフィール</li>
+          <li>連絡先交換の強制や仲介</li>
+        </ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 機能要件 ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow"><span class="no">04</span><span>機能要件</span><span class="bar"></span></div>
+      <h2 class="sec">何を、どの順で作るか。</h2>
+      <p class="lead">優先度 ── <span class="tg p0">P0</span> MVP必須／<span class="tg p1">P1</span> MVP直後／<span class="tg p2">P2</span> 将来。</p>
+      <table>
+        <thead><tr><th>機能</th><th>内容</th><th style="width:64px">優先</th></tr></thead>
+        <tbody>
+          <tr><td><b>サインアップ</b></td><td>電話番号またはメールで登録。最小限の個人情報</td><td><span class="tg p0">P0</span></td></tr>
+          <tr><td><b>プロフィール</b></td><td>ニックネーム＋任意アイコン。実名・公開フォロワー数は持たない</td><td><span class="tg p0">P0</span></td></tr>
+          <tr><td><b>店舗（部屋）登録</b></td><td>立ち飲み屋を「部屋」として登録。初期は運営が手動</td><td><span class="tg p0">P0</span></td></tr>
+          <tr><td><b>チェックイン</b></td><td>GPSで店内にいることを確認して記録</td><td><span class="tg p0">P0</span></td></tr>
+          <tr><td><b>滞在判定</b></td><td>一定時間以上の滞在を有効な来店としてカウント（通過を弾く）</td><td><span class="tg p0">P0</span></td></tr>
+          <tr><td><b>こっそりチェックイン</b></td><td>自分は載らず、常連リストを見るだけにできる</td><td><span class="tg p0">P0</span></td></tr>
+          <tr><td><b>来店履歴・常連判定</b></td><td>別々の日に5回・各回一定滞在で「常連」に昇格</td><td><span class="tg p0">P0</span></td></tr>
+          <tr><td><b>今いる常連リスト</b></td><td>今その店にいる常連を一覧表示</td><td><span class="tg p0">P0</span></td></tr>
+          <tr><td><b>ゆるい合図</b></td><td>片方向の軽いリアクションを送れる。一晩1〜2回まで</td><td><span class="tg p0">P0</span></td></tr>
+          <tr><td><b>そっとブロック・通報</b></td><td>相手からの合図をシャットアウト（通知されない）／運営通報</td><td><span class="tg p0">P0</span></td></tr>
+          <tr><td><b>不正アカウント抑止</b></td><td>1人1アカウント原則。電話番号認証で多重登録を抑止</td><td><span class="tg p1">P1</span></td></tr>
+          <tr><td><b>位置偽装の抑止</b></td><td>GPSスプーフィング対策（完全防御は不可、§安全）</td><td><span class="tg p1">P1</span></td></tr>
+          <tr><td><b>性別比モニタリング</b></td><td>場の性別比が偏った際の検知・対処</td><td><span class="tg p1">P1</span></td></tr>
+          <tr><td><b>店（マスター）公認・ホスト</b></td><td>マスターが自店を公認・管理、場のホストに</td><td><span class="tg p2">P2</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== プラットフォーム ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow"><span class="no">05</span><span>プラットフォーム</span><span class="bar"></span></div>
+      <h2 class="sec">スマホ優先で、すべてに。</h2>
+      <p class="lead">スマホ優先で設計し、Web・iOS・Windows すべてに対応。単一コードベースのクロスプラットフォーム構成で、現実的なコストで満たす。</p>
+      <table>
+        <thead><tr><th>対象</th><th>提供形態</th><th>推奨実装</th></tr></thead>
+        <tbody>
+          <tr><td><b>iOS / Android</b></td><td>ネイティブアプリ（App Store / Google Play）</td><td>Flutter（同一コードベース）</td></tr>
+          <tr><td><b>Web</b></td><td>レスポンシブWeb（PWA）</td><td>Flutter Web</td></tr>
+          <tr><td><b>Windows</b></td><td>デスクトップアプリ</td><td>PWAインストール / Flutter Desktop</td></tr>
+        </tbody>
+      </table>
+      <p class="body">コア体験が「店内でのチェックイン」である以上、主たる利用はスマホ。Web・Windowsは閲覧・設定・店側管理が中心で、位置情報が要のためデスクトップでのチェックインは制限する。品質の床として、最小幅まで破綻しないレスポンシブ・キーボードフォーカス可視・<code style="font-family:var(--mono);color:var(--amber-soft)">prefers-reduced-motion</code> 尊重・ダークを第一級として担保する。</p>
+    </div>
+  </section>
+
+  <!-- ===================== 安全設計 ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow"><span class="no">06</span><span>信頼・安全設計</span><span class="bar"></span></div>
+      <h2 class="sec">ここが、<em>生命線</em>。</h2>
+      <p class="lead">「実際に知り合う」「夜・飲酒・初対面」という最もリスクの高い組み合わせを、マスター常駐なしで運用する。守るべきは ── 一人で来た人が、安心して使えること。場が偏った瞬間に離脱が起き、場が死ぬ。</p>
+      <h3 class="sub">三層の安全装置</h3>
+      <div class="safety">
+        <div class="slayer"><div class="num">壱</div><div><h4>通い続けたコスト＝信頼</h4><p>別々の日に5回・各回一定滞在しないと常連になれない。出会い目的の人間が「ナンパのために週数回・数週間、同じ店に通い続ける」コストを払えない。通うコスト自体が、悪意のフィルターになる。</p></div></div>
+        <div class="slayer"><div class="num">弐</div><div><h4>その場限り</h4><p>つながれるのは「今その店にいる常連」同士のみ。店を出ればやりとりは切れる。店外の付きまとい・DMナンパが構造的に不可能。</p></div></div>
+        <div class="slayer"><div class="num">参</div><div><h4>片方向の合図＋受け手の防御</h4><p>送る側の気軽さは残しつつ、安全の重心を「上限」と「受け手の守り」に置く。下の必須セットで担保する。</p></div></div>
+      </div>
+      <h3 class="sub">片方向合図の必須セット（譲らない3点）</h3>
+      <div class="cards">
+        <div class="card"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="4"/></svg></div>
+          <h4>上限を強く絞る</h4><p>一晩に送れる合図は1〜2回。乱射を不可能に。特定の一人への集中砲火を防ぐ最大のブレーキ。</p></div>
+        <div class="card"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg></div>
+          <h4>受け手に拒否の退路</h4><p>合図は軽く届くだけ。無視しても角が立たない（送り手に伝わらない）。そっとブロックをワンタップで。受け手が常に主導権を持つ。</p></div>
+        <div class="card"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><path d="m4 4 16 16"/></svg></div>
+          <h4>可視性は安全側がデフォルト</h4><p>「こっそりチェックイン」を必ず備える。一人で来た人が、見られずに様子を見られる退路。</p></div>
+      </div>
+      <h3 class="sub">位置偽装への方針</h3>
+      <p class="body">完全防御は不可能。「割に合わなくする」方向で抑止する。別日×5回×滞在時間を稼ぐ手間に対し、得られるのは「一立ち飲み屋の常連という資格」のみ。偽装コストが見返りを上回るため構造的に抑止され、残余リスクは通報で補完する。</p>
+    </div>
+  </section>
+
+  <!-- ===================== 立ち上げ ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow"><span class="no">07</span><span>立ち上げ戦略</span><span class="bar"></span></div>
+      <h2 class="sec">最大の急所 ──「誰もいない部屋」。</h2>
+      <p class="lead">SNS最大の急所を、現実の力で越える。アプリで広く薄く配らず、創業者の行きつけ一店に薪を集めて火をつける。</p>
+      <div class="cards">
+        <div class="card"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 9 9l-7 .5 5.5 4.5L6 21l6-3.5L18 21l-1.5-7L22 9.5 15 9z"/></svg></div>
+          <h4>一店舗に集中投入</h4><p>一点を満たし切ってから、同エリアの近隣店へ。すべての場所を同時に狙わない。</p></div>
+        <div class="card"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="7" r="3"/><circle cx="16" cy="9" r="2.5"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5M14 20c0-2 1.5-3.5 4-3.5"/></svg></div>
+          <h4>三段の初期獲得</h4><p>行きつけでリアルに声かけ＋マスターの後押し＋SNS告知。最初の数十人を現実で調達する。</p></div>
+        <div class="card"><div class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg></div>
+          <h4>満たし切ってから次へ</h4><p>「開けば誰か常連がいる」状態になってから横展開する。</p></div>
+      </div>
+      <h3 class="sub">コンシェルジュ型MVP（着手前の検証・強く推奨）</h3>
+      <p class="body">コードを書く前に、思想だけを現実でテストする。行きつけの店で常連10〜20人のグループを作り、4週間「店にいる時だけ・軽い合図だけ」のルールを手動運用する。測るのは ── ①常連同士が実際に知り合えたか ②使い続けたか ③また やりたいと思ったか。ここで仮説が死ぬなら、開発に進まない判断ができる。</p>
+    </div>
+  </section>
+
+  <!-- ===================== KPI ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow"><span class="no">08</span><span>成功指標</span><span class="bar"></span></div>
+      <h2 class="sec">何が立てば、勝ちか。</h2>
+      <div class="kpi">
+        <div class="lbl">北極星指標（案）</div>
+        <div class="star">行きつけの一店で、<em>別の常連と新しく知り合えた人</em>の割合</div>
+      </div>
+      <p class="body">Thirdの存在価値そのもの。これが立たなければ、機能をいくら足しても意味がない。補助指標として ── 一店舗あたりの常連人数（密度）、チェックイン後に常連リストを開く率、合図→現実合流の発生率、週次の再訪率、通報率・そっとブロック率・性別比。</p>
+    </div>
+  </section>
+
+  <!-- ===================== 次に決めること ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow"><span class="no">09</span><span>次に決めること</span><span class="bar"></span></div>
+      <h2 class="sec">まだ、空欄がある。</h2>
+      <ul class="todo">
+        <li>最初の一店舗の具体像と、プライマリ・ペルソナの確定</li>
+        <li>「一定時間以上の滞在」の具体的な分数</li>
+        <li>合図の上限を「1回」にするか「2回」にするか</li>
+        <li>常連リストの表示仕様（ニックネームか顔写真か。安全設計と一体で決定）</li>
+        <li>性別比の偏りへの具体的な介入方法</li>
+        <li>収益モデルの具体化（導入無料の先）</li>
+      </ul>
+      <p class="body" style="margin-top:20px;color:var(--muted);">数値（市場規模・利用率など）は外部の一次情報での裏取りを着手前の第0タスクとする。本書は壁打ちでの確定事項に基づく初版。「未確定」を順に詰め、確定し次第このドキュメントを更新する。</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="lantern" style="margin:0 auto 18px;"></div>
+    <p class="big">Third</p>
+    <p>つながるのは、店にいる間だけ。<br>店を出れば、また今度ね。</p>
+  </footer>
+
+</body>
+</html>

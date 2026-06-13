@@ -1,0 +1,85 @@
+/* ============================================================
+   Third — Design tokens & base
+   「カウンターの灯り」: 墨色の闇に、ウイスキーの琥珀と灯火のクリーム。
+   （Third_デザイン.html のトークンを正とする）
+   ============================================================ */
+:root{
+  --ink:#15110D;       /* 墨色の闇 */
+  --char:#241E18;      /* 炭 */
+  --char-2:#2E2720;    /* 一段明るい炭 */
+  --amber:#D89A4E;     /* ウイスキーの琥珀 */
+  --amber-soft:#E6B978;
+  --cream:#F2E4CC;     /* 灯火のクリーム */
+  --cream-dim:#C9B89B; /* 沈んだクリーム */
+  --copper:#A85838;    /* 赤銅 */
+  --muted:#A1907A;     /* 燻んだ褐色グレー（カード面でも AA 4.5:1 を満たす明度に調整） */
+
+  --line:rgba(216,154,78,.16);
+  --line-soft:rgba(242,228,204,.08);
+
+  --ok:#7FB069;
+  --warn:#E6B978;
+  --crit:#C77B5A;
+
+  --mincho:'Shippori Mincho', serif;
+  --gothic:'Zen Kaku Gothic New', sans-serif;
+
+  --bg:#0B0907;
+
+  /* device frame metrics */
+  --device-w: 412px;
+  --device-h: 880px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+html,body{height:100%;}
+body{
+  background:var(--bg);
+  color:var(--cream);
+  font-family:var(--gothic);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  line-height:1.7;
+  overflow:hidden;            /* the app itself scrolls inside the device */
+}
+svg{display:block;}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer;}
+input,textarea,select{font-family:inherit;color:inherit;}
+em{font-style:normal;color:var(--amber);}
+ul{list-style:none;}
+a{color:var(--amber-soft);}
+
+/* ----- 灯り（flicker）と息づかい（breathe） ----- */
+@keyframes flicker{0%,100%{opacity:1;}48%{opacity:.92;}50%{opacity:.7;}52%{opacity:.95;}}
+@keyframes breathe{0%,100%{opacity:.25;}50%{opacity:.8;}}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+@keyframes fade{from{opacity:0;}to{opacity:1;}}
+@keyframes sheet-up{from{transform:translateY(100%);}to{transform:translateY(0);}}
+@keyframes toast-in{from{opacity:0;transform:translateY(-14px) scale(.98);}to{opacity:1;transform:none;}}
+@keyframes ring-fill{from{stroke-dashoffset:var(--from);}to{stroke-dashoffset:var(--to);}}
+@keyframes lamp-on{from{transform:scale(.4);opacity:0;}to{transform:scale(1);opacity:1;}}
+
+.lantern{
+  width:9px;height:9px;border-radius:50%;background:var(--amber);
+  box-shadow:0 0 8px 1px rgba(216,154,78,.7);
+  animation:flicker 4s ease-in-out infinite;display:inline-block;flex-shrink:0;
+}
+
+/* ----- accessibility ----- */
+:focus-visible{outline:2px solid var(--amber-soft);outline-offset:2px;border-radius:6px;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}

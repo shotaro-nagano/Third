@@ -1,0 +1,119 @@
+/* ============================================================
+   Third — 画面別スタイル（止まり木 / 店内 / 履歴）
+   ============================================================ */
+
+/* ---------- 止まり木（haunt カード） ---------- */
+.haunts{display:flex;flex-direction:column;gap:13px;}
+.haunt{position:relative;display:block;width:100%;text-align:left;border-radius:18px;
+  padding:17px 17px 15px;overflow:hidden;border:1px solid var(--line);
+  background:linear-gradient(150deg,rgba(46,39,32,.9),rgba(21,17,13,.6));
+  transition:transform .14s var(--ease), border-color .2s;animation:rise .4s var(--ease) both;}
+.haunt:hover{border-color:rgba(216,154,78,.34);}
+.haunt:active{transform:scale(.99);}
+.haunt.lit::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(80% 120% at 84% 12%,rgba(216,154,78,.22),transparent 60%);pointer-events:none;}
+.haunt__r1{position:relative;z-index:2;}
+.haunt__name{font-family:var(--mincho);font-weight:700;font-size:16px;letter-spacing:.05em;color:var(--cream);}
+.haunt__meta{font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:.07em;}
+.haunt .badge{position:absolute;top:15px;right:15px;z-index:3;}
+
+.lamp-row{display:flex;align-items:center;gap:5px;margin-top:14px;position:relative;z-index:2;}
+.lamp{width:7px;height:7px;border-radius:50%;background:var(--amber);
+  box-shadow:0 0 7px 1px rgba(216,154,78,.6);animation:lamp-on .4s var(--ease) both;}
+.lamp.off{background:rgba(138,122,102,.4);box-shadow:none;}
+.lamp-cap{margin-left:7px;font-size:10px;color:var(--amber-soft);letter-spacing:.04em;}
+.lamp-cap.dim{color:var(--muted);}
+
+/* ---------- 店プレビュー / チェックイン ---------- */
+.preview{padding:8px 20px 30px;text-align:center;animation:fade .4s var(--ease);}
+.preview__badge{margin-bottom:6px;}
+.preview__lantern{margin:10px 0 14px;}
+.preview__name{font-family:var(--mincho);font-weight:800;font-size:26px;letter-spacing:.05em;color:var(--cream);}
+.preview__kana{font-size:11px;color:var(--muted);letter-spacing:.18em;margin-top:6px;}
+.preview__chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0;}
+.preview__blurb{font-size:12.5px;line-height:1.95;color:var(--cream-dim);letter-spacing:.02em;max-width:300px;margin:0 auto;}
+.preview__status{margin:20px 0 6px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.preview__status .lamp-row{justify-content:center;}
+.preview__statusT{font-size:12px;color:var(--amber-soft);letter-spacing:.04em;}
+.preview .check--row{text-align:left;margin-top:18px;}
+.preview__gps{display:flex;gap:7px;align-items:center;justify-content:center;font-size:10.5px;
+  color:var(--muted);margin-top:14px;letter-spacing:.02em;}
+.preview__gps .ic{width:14px;height:14px;color:var(--amber-soft);flex-shrink:0;}
+
+/* ---------- 店内（今いる常連） ---------- */
+.inn{height:100%;display:flex;flex-direction:column;}
+.inn-hd{padding:0 20px 8px;text-align:center;}
+.inn-hd .st{display:inline-flex;align-items:center;gap:7px;font-size:9.5px;letter-spacing:.1em;
+  color:var(--amber-soft);border:1px solid var(--line);border-radius:20px;padding:4px 13px;}
+.inn-hd .st .lantern{width:7px;height:7px;}
+.inn-hd__sub{font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+.inn-stage{position:relative;flex:1;min-height:clamp(300px,46vh,430px);overflow:hidden;}
+.counter-cap{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:150%;height:58%;
+  border-radius:50% 50% 0 0;background:linear-gradient(180deg,rgba(46,39,32,0),rgba(46,39,32,.55));
+  border-top:1px solid var(--line);}
+.seat{position:absolute;display:flex;flex-direction:column;align-items:center;gap:5px;
+  text-align:center;animation:rise .5s var(--ease) both;}
+.seat .seat__nm{font-size:9.5px;color:var(--cream-dim);letter-spacing:.05em;}
+.seat .seat__yrs{font-size:8px;color:var(--muted);}
+.seat__sent{color:var(--amber);}
+.seat--me{cursor:default;}
+.hint{position:absolute;left:0;right:0;bottom:12px;text-align:center;font-size:10px;
+  color:var(--muted);letter-spacing:.08em;padding:0 20px;}
+
+.inn-foot{flex-shrink:0;padding:12px 20px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line-soft);}
+.inn-foot__row{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;}
+.dwell{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;color:var(--cream-dim);letter-spacing:.04em;}
+.dwell .ic{width:13px;height:13px;color:var(--muted);}
+.inn-foot__safe{display:flex;gap:6px;align-items:center;justify-content:center;font-size:10px;
+  color:var(--muted);margin-top:10px;letter-spacing:.02em;}
+.inn-foot__safe .ic{width:12px;height:12px;color:var(--amber-soft);flex-shrink:0;}
+
+/* ---------- 履歴 / 常連の証 ---------- */
+.hist{padding:6px 20px 30px;animation:fade .4s var(--ease);}
+.creed{display:flex;flex-direction:column;}
+.creed__store{text-align:center;font-family:var(--mincho);font-weight:700;font-size:16px;
+  letter-spacing:.08em;color:var(--cream);}
+.creed-ttl{text-align:center;font-family:var(--mincho);font-weight:700;font-size:13px;
+  letter-spacing:.16em;color:var(--amber-soft);margin:8px 0 18px;}
+.ring-wrap{display:flex;flex-direction:column;align-items:center;gap:7px;}
+.ring-prog{animation:ring-fill 1.1s var(--ease) both;}
+.ring-cap{font-family:var(--mincho);font-size:13px;color:var(--amber-soft);letter-spacing:.1em;margin-top:2px;}
+.ring-sub{font-size:10px;color:var(--muted);letter-spacing:.05em;}
+.ring-sub--q{color:var(--muted);margin-top:4px;}
+.timeline{margin-top:22px;}
+.tl{display:flex;gap:14px;}
+.tl .dc{display:flex;flex-direction:column;align-items:center;}
+.tl .d{width:11px;height:11px;border-radius:50%;border:1px solid var(--amber);flex-shrink:0;margin-top:3px;}
+.tl .d.fill{background:var(--amber);box-shadow:0 0 8px 1px rgba(216,154,78,.5);}
+.tl .ln{width:1px;flex:1;background:var(--line);min-height:26px;}
+.tl .tx{padding-bottom:18px;}
+.tl .tx b{display:block;font-family:var(--mincho);font-weight:600;font-size:13px;color:var(--cream);letter-spacing:.04em;margin-bottom:3px;}
+.tl .tx span{font-size:10px;color:var(--muted);line-height:1.7;letter-spacing:.02em;}
+.creed-foot{border-top:1px solid var(--line-soft);padding-top:16px;margin-top:2px;text-align:center;}
+.creed-foot p{font-family:var(--mincho);font-size:11.5px;line-height:2;color:var(--cream-dim);letter-spacing:.04em;}
+
+/* 通っている部屋（一覧） */
+.rooms{margin-top:24px;}
+.rooms__t{font-size:11px;letter-spacing:.1em;color:var(--muted);margin-bottom:10px;}
+.room{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;
+  border:1px solid var(--line-soft);border-radius:14px;padding:13px 14px;margin-bottom:9px;
+  background:rgba(46,39,32,.28);transition:border-color .2s;}
+.room:hover{border-color:rgba(216,154,78,.3);}
+.room__l{display:flex;align-items:center;gap:11px;min-width:0;}
+.room__txt{display:flex;flex-direction:column;min-width:0;}
+.room__nm{font-family:var(--mincho);font-weight:600;font-size:14px;color:var(--cream);letter-spacing:.04em;}
+.room__sub{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.04em;}
+.room__r{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.room__prog{display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--amber-soft);letter-spacing:.04em;}
+.room__bar{width:54px;height:5px;border-radius:5px;background:rgba(138,122,102,.25);overflow:hidden;}
+.room__bar i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--amber-soft),var(--amber));}
+.room__chev{width:16px;height:16px;color:var(--muted);}
+
+/* ---------- narrow phones: seats must not overlap ---------- */
+@media (max-width:360px){
+  .inn-stage{min-height:clamp(330px,52vh,430px);}
+  .inn-stage .seat .av{width:38px;height:38px;font-size:13px;}
+  .seat .seat__nm{font-size:9px;}
+  .seat .seat__yrs{font-size:7.5px;}
+  .preview__name{font-size:23px;}
+}
