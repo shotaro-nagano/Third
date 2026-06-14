@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Third — 紹介企画書</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#15110D; --char:#241E18; --char-2:#2E2720;
+    --amber:#D89A4E; --amber-soft:#E6B978; --cream:#F2E4CC; --cream-dim:#C9B89B;
+    --copper:#A85838; --muted:#A1907A;
+    --line:rgba(216,154,78,.18); --line-soft:rgba(242,228,204,.08);
+    --mincho:'Shippori Mincho',serif; --gothic:'Zen Kaku Gothic New',sans-serif;
+    --ok:#7FB069;
+  }
+  @page{ size:A4; margin:0; }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ background:#0B0907; color:var(--cream); font-family:var(--gothic); line-height:1.75;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  em{ font-style:normal; color:var(--amber); }
+
+  .page{
+    position:relative; width:210mm; height:297mm; overflow:hidden;
+    padding:20mm 17mm 16mm; display:flex; flex-direction:column;
+    background:radial-gradient(120% 80% at 50% -8%, #241E18 0%, #15110D 52%, #0B0907 100%);
+    page-break-after:always;
+  }
+  .page:last-child{ page-break-after:auto; }
+  .glow{ position:absolute; border-radius:50%; pointer-events:none;
+    background:radial-gradient(circle, rgba(216,154,78,.14), transparent 62%); }
+
+  .eyebrow{ display:flex; align-items:center; gap:10px; font-family:var(--mincho);
+    font-size:11px; letter-spacing:.32em; color:var(--muted); text-indent:.32em; margin-bottom:16px; }
+  .eyebrow .no{ color:var(--amber); font-weight:700; }
+  .eyebrow .bar{ flex:1; height:1px; background:var(--line-soft); }
+  h2.sec{ font-family:var(--mincho); font-weight:800; font-size:30px; line-height:1.4;
+    letter-spacing:.04em; color:var(--cream); margin-bottom:14px; }
+  h3.sub{ font-family:var(--mincho); font-weight:700; font-size:15px; letter-spacing:.06em;
+    color:var(--amber-soft); margin:22px 0 12px; }
+  p.lead{ font-size:13.5px; line-height:2.05; color:var(--cream-dim); letter-spacing:.02em; }
+  p.body{ font-size:12.5px; line-height:1.95; color:var(--cream-dim); letter-spacing:.01em; margin-bottom:10px; }
+  .small{ font-size:11px; color:var(--muted); line-height:1.8; letter-spacing:.02em; }
+
+  .lantern{ width:11px; height:11px; border-radius:50%; background:var(--amber);
+    box-shadow:0 0 10px 2px rgba(216,154,78,.7); display:inline-block; flex-shrink:0; }
+
+  /* cover */
+  .cover{ align-items:center; justify-content:center; text-align:center; }
+  .cover .mark{ display:inline-flex; align-items:center; gap:12px; margin-bottom:40px; }
+  .cover .mark span{ font-family:var(--mincho); font-weight:700; font-size:16px; letter-spacing:.5em;
+    color:var(--cream-dim); text-indent:.5em; }
+  .cover h1{ font-family:var(--mincho); font-weight:800; font-size:39px; line-height:1.5;
+    letter-spacing:.03em; color:var(--cream); }
+  .cover .tag{ margin-top:28px; font-size:15px; line-height:2.1; color:var(--cream-dim); letter-spacing:.04em; }
+  .cover .rule{ width:1px; height:60px; margin:40px auto; background:linear-gradient(var(--amber),transparent); opacity:.65; }
+  .cover .meta{ font-family:var(--mincho); font-size:12px; letter-spacing:.22em; color:var(--muted); }
+  .cover .foot{ position:absolute; bottom:18mm; left:0; right:0; text-align:center;
+    font-family:var(--mincho); font-size:12px; letter-spacing:.1em; color:var(--cream-dim); }
+
+  /* cards */
+  .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:6px 0; }
+  .cards.two{ grid-template-columns:1fr 1fr; }
+  .card{ border:1px solid var(--line); border-radius:14px; padding:18px 18px;
+    background:linear-gradient(150deg,rgba(46,39,32,.6),rgba(21,17,13,.4)); }
+  .card .k{ font-family:var(--mincho); font-weight:800; font-size:22px; color:rgba(216,154,78,.5); line-height:1; margin-bottom:10px; }
+  .card h4{ font-family:var(--mincho); font-weight:700; font-size:14.5px; letter-spacing:.04em; color:var(--cream); margin-bottom:8px; }
+  .card p{ font-size:11.5px; line-height:1.8; color:var(--muted); letter-spacing:.01em; }
+
+  .quote{ font-family:var(--mincho); font-weight:600; font-size:21px; line-height:1.95;
+    letter-spacing:.05em; color:var(--cream); padding:22px 26px; border-left:2px solid var(--amber);
+    background:linear-gradient(120deg,rgba(216,154,78,.08),transparent); border-radius:0 14px 14px 0; margin:14px 0; }
+
+  .pills{ display:flex; flex-wrap:wrap; gap:10px; margin:14px 0; }
+  .pill{ display:inline-flex; align-items:center; gap:7px; font-size:12px; letter-spacing:.06em;
+    border:1px solid var(--line); border-radius:20px; padding:7px 15px; color:var(--cream-dim);
+    background:rgba(46,39,32,.4); }
+  .pill .lantern{ width:7px; height:7px; }
+
+  /* flow steps */
+  .flow{ display:flex; flex-direction:column; gap:0; margin:8px 0; }
+  .fstep{ display:flex; gap:16px; }
+  .fstep .n{ width:34px; height:34px; flex-shrink:0; border-radius:50%; border:1px solid var(--amber);
+    display:flex; align-items:center; justify-content:center; font-family:var(--mincho); font-weight:700;
+    font-size:15px; color:var(--amber); background:rgba(216,154,78,.08); }
+  .fstep:last-child .n{ background:var(--amber); color:var(--ink); }
+  .fcol{ display:flex; flex-direction:column; align-items:center; }
+  .fcol .ln{ width:1px; flex:1; background:var(--line); min-height:14px; margin:4px 0; }
+  .fstep .tx{ padding-bottom:16px; padding-top:5px; }
+  .fstep .tx b{ display:block; font-family:var(--mincho); font-weight:600; font-size:15px; color:var(--cream);
+    letter-spacing:.04em; margin-bottom:4px; }
+  .fstep .tx span{ font-size:12px; color:var(--muted); line-height:1.75; }
+
+  /* phone shots */
+  .deck{ display:flex; gap:16px; justify-content:center; align-items:flex-start; margin:14px 0; }
+  .shot{ display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .shot .frame{ width:158px; border-radius:22px; padding:6px; background:linear-gradient(160deg,#3a322a,#15110D 42%);
+    box-shadow:0 18px 40px -16px rgba(0,0,0,.8), 0 0 0 1px rgba(216,154,78,.1); }
+  .shot .frame img{ width:100%; display:block; border-radius:17px; }
+  .shot .cap{ font-family:var(--mincho); font-size:11px; letter-spacing:.1em; color:var(--amber-soft); }
+  .shot.lg .frame{ width:188px; }
+
+  /* compare */
+  .compare{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:10px 0; }
+  .col{ border-radius:14px; padding:18px 20px; }
+  .col.bad{ border:1px solid rgba(199,123,90,.3); background:rgba(199,123,90,.05); }
+  .col.good{ border:1px solid rgba(127,176,105,.3); background:rgba(127,176,105,.06); }
+  .col h5{ font-family:var(--mincho); font-size:13px; letter-spacing:.08em; margin-bottom:12px; font-weight:700; }
+  .col.bad h5{ color:var(--copper); } .col.good h5{ color:var(--ok); }
+  .col li{ list-style:none; font-size:12px; line-height:1.6; color:var(--cream-dim); padding:6px 0 6px 16px; position:relative; }
+  .col li::before{ content:""; position:absolute; left:0; top:12px; width:6px; height:6px; border-radius:50%; }
+  .col.bad li::before{ background:var(--copper); } .col.good li::before{ background:var(--ok); }
+
+  .kpi{ border:1px solid var(--amber); border-radius:16px; padding:26px; text-align:center;
+    background:radial-gradient(120% 140% at 50% 0%,rgba(216,154,78,.12),transparent 70%); margin:8px 0 16px; }
+  .kpi .lbl{ font-size:11px; letter-spacing:.16em; color:var(--muted); margin-bottom:12px; }
+  .kpi .star{ font-family:var(--mincho); font-weight:700; font-size:19px; line-height:1.7; color:var(--cream); letter-spacing:.04em; }
+
+  .ringwrap{ display:flex; align-items:center; gap:22px; margin:10px 0 4px; }
+  .ringwrap .txt b{ display:block; font-family:var(--mincho); font-size:16px; color:var(--cream); margin-bottom:6px; }
+  .ringwrap .txt p{ font-size:12px; color:var(--muted); line-height:1.8; }
+
+  .foot-no{ position:absolute; bottom:11mm; right:17mm; font-family:var(--mincho); font-size:10px;
+    letter-spacing:.2em; color:var(--muted); }
+  .foot-brand{ position:absolute; bottom:11mm; left:17mm; font-family:var(--mincho); font-size:10px;
+    letter-spacing:.3em; color:var(--muted); }
+
+  .spacer{ flex:1; }
+</style>
+</head>
+<body>
+
+<!-- ============ 表紙 ============ -->
+<section class="page cover">
+  <div class="glow" style="width:520px;height:520px;top:6%;left:50%;transform:translateX(-50%);"></div>
+  <div class="mark"><span class="lantern" style="width:15px;height:15px;"></span><span>THIRD</span></div>
+  <h1>行きつけのバーにいる間だけ、<br><em>常連</em>と知り合える。</h1>
+  <p class="tag">盛らない。追ってこない。店を出れば、関係はそっと消える。</p>
+  <div class="rule"></div>
+  <div class="meta">紹介企画書　・　MVP v0.1　・　2026</div>
+  <div class="foot">サードプレイスの常連関係を、そのままデジタルに。</div>
+</section>
+
+<!-- ============ 01 課題 ============ -->
+<section class="page">
+  <div class="glow" style="width:380px;height:380px;top:-10%;right:-12%;"></div>
+  <div class="eyebrow"><span class="no">01</span><span>なぜ今か</span><span class="bar"></span></div>
+  <h2 class="sec">「行きつけ」が、消えつつある。</h2>
+  <p class="lead">家でも職場でもない第三の居場所＝<em>サードプレイス</em>。かつてバーには、深く話すわけではないが顔見知りで、行けば誰かがいる「気楽な常連関係」があった。<br>この温度感は、既存のSNSでもグループチャットでも再現できていない。</p>
+
+  <h3 class="sub">既存SNSの、構造的な問題</h3>
+  <div class="cards">
+    <div class="card"><div class="k">盛</div><h4>盛る圧力</h4><p>投稿は「観客」に向く。映え・演出から逃れられず、ありのままの常連関係が育たない。</p></div>
+    <div class="card"><div class="k">繋</div><h4>つながりっぱなし</h4><p>一度つながると距離を置きづらい。気軽な関係が、重い関係になってしまう。</p></div>
+    <div class="card"><div class="k">偽</div><h4>本物の希少化</h4><p>生成AIでコンテンツも偽アカウントも無限。「実在の人間と実際に会う」価値が相対的に上がっている。</p></div>
+  </div>
+
+  <h3 class="sub">だから今、勝ち筋がある</h3>
+  <p class="body">巨大SNSは広告＝無限フィードに依存するため、<em>「閉じた・その場限り・少人数」</em>へ全振りできない。Thirdが狙うのは、まさにこの巨人が構造的に追随しづらい領域。孤独・サードプレイス喪失という都市生活者の本物の痛みに、正面から応える。</p>
+  <div class="spacer"></div>
+  <div class="foot-brand">THIRD</div><div class="foot-no">01</div>
+</section>
+
+<!-- ============ 02 コンセプト ============ -->
+<section class="page">
+  <div class="glow" style="width:420px;height:420px;bottom:-14%;left:-10%;"></div>
+  <div class="eyebrow"><span class="no">02</span><span>コンセプト</span><span class="bar"></span></div>
+  <h2 class="sec">その場限りの、常連SNS。</h2>
+  <div class="quote">行きつけのバーにいる間だけ、同じ店に通い続けた常連同士が、ゆるい合図で知り合える。<br>店を出れば、関係はそっと消える。</div>
+  <p class="lead">追わない。残さない。だから、気楽。<br>「人」から入るのではなく、<em>「同じ店に通っている」という共通の行動</em>から、そっと知り合う。</p>
+
+  <h3 class="sub">設計の芯 ── すべてが一点に整列する</h3>
+  <div class="pills">
+    <span class="pill"><span class="lantern"></span>場所主軸（行きつけが「部屋」になる）</span>
+    <span class="pill"><span class="lantern"></span>常連限定</span>
+    <span class="pill"><span class="lantern"></span>その場限り</span>
+    <span class="pill"><span class="lantern"></span>片方向の合図</span>
+  </div>
+  <p class="body">これらの要素はバラバラの機能ではなく、<em>「気軽だけど安全な常連の場」</em>という一点に向かって整列している。「つながりっぱなしのSNS」への、構造的なアンチテーゼ。</p>
+  <div class="spacer"></div>
+  <div class="foot-brand">THIRD</div><div class="foot-no">02</div>
+</section>
+
+<!-- ============ 03 コア体験 ============ -->
+<section class="page">
+  <div class="eyebrow"><span class="no">03</span><span>コア体験</span><span class="bar"></span></div>
+  <h2 class="sec">店に入って、出るまで。</h2>
+  <div style="display:flex;gap:24px;align-items:flex-start;">
+    <div style="flex:1;">
+      <div class="flow">
+        <div class="fstep"><div class="fcol"><div class="n">1</div><div class="ln"></div></div><div class="tx"><b>チェックイン</b><span>店に着いてアプリを開く。位置情報で「今この店にいる」が記録される。</span></div></div>
+        <div class="fstep"><div class="fcol"><div class="n">2</div><div class="ln"></div></div><div class="tx"><b>今いる常連が見える</b><span>カウンターを囲む常連がゆるく一覧表示。こっそり（見るだけ）も選べる。</span></div></div>
+        <div class="fstep"><div class="fcol"><div class="n">3</div><div class="ln"></div></div><div class="tx"><b>ゆるい合図</b><span>気になった常連へ「乾杯しませんか」。片方向、一晩に1〜2回まで。</span></div></div>
+        <div class="fstep"><div class="fcol"><div class="n">4</div><div class="ln"></div></div><div class="tx"><b>現実で合流</b><span>同じ店の中にいる。あとは目を合わせて隣へ。会話は現実に明け渡す。</span></div></div>
+        <div class="fstep"><div class="fcol"><div class="n">5</div></div><div class="tx"><b>店を出れば、切れる</b><span>その場限り。やりとりは残らない。また同じ店で会えば、再開する。</span></div></div>
+      </div>
+    </div>
+    <div class="shot lg" style="margin-top:6px;">
+      <div class="frame"><img src="shot-venue.png" alt="店内"></div>
+      <div class="cap">店内 ── 今いる常連</div>
+    </div>
+  </div>
+  <div class="spacer"></div>
+  <div class="foot-brand">THIRD</div><div class="foot-no">03</div>
+</section>
+
+<!-- ============ 04 プロトタイプ ============ -->
+<section class="page">
+  <div class="glow" style="width:360px;height:360px;top:-12%;left:50%;transform:translateX(-50%);"></div>
+  <div class="eyebrow"><span class="no">04</span><span>プロトタイプ</span><span class="bar"></span></div>
+  <h2 class="sec">企画だけでは、ありません。</h2>
+  <p class="lead">スマホ優先・全プラットフォーム対応の<em>動くWebプロトタイプ</em>が、すでにあります。世界観とコア体験は、その場で触って確かめられます。</p>
+  <div class="deck">
+    <div class="shot"><div class="frame"><img src="shot-home-bar.png" alt="止まり木"></div><div class="cap">止まり木</div></div>
+    <div class="shot"><div class="frame"><img src="shot-signal.png" alt="ゆるい合図"></div><div class="cap">ゆるい合図</div></div>
+    <div class="shot"><div class="frame"><img src="shot-history.png" alt="常連の証"></div><div class="cap">常連の証</div></div>
+  </div>
+  <p class="body" style="text-align:center;color:var(--muted);">バニラ HTML / CSS / JS・ビルド不要・PWA対応。墨色の闇に、ウイスキーの琥珀と灯火のクリーム。<br>見出しは明朝体で和の品格を、本文は端正なゴシックで可読性を。</p>
+  <div class="spacer"></div>
+  <div class="foot-brand">THIRD</div><div class="foot-no">04</div>
+</section>
+
+<!-- ============ 05 差別化 ============ -->
+<section class="page">
+  <div class="eyebrow"><span class="no">05</span><span>差別化</span><span class="bar"></span></div>
+  <h2 class="sec">巨人が、追随しづらい。</h2>
+  <p class="lead">Thirdの強みは機能の数ではなく、<em>構造</em>にある。広告モデルの巨大SNSとは、目指す方向そのものが逆を向いている。</p>
+  <div class="compare">
+    <div class="col bad"><h5>既存の巨大SNS</h5>
+      <li>広告 ＝ 無限フィード依存</li>
+      <li>つながりっぱなし・追ってくる</li>
+      <li>盛る・映える圧力</li>
+      <li>規模（多人数・拡散）が正義</li>
+    </div>
+    <div class="col good"><h5>Third</h5>
+      <li>その場限り・関係はリセット</li>
+      <li>今いる常連だけ・少人数</li>
+      <li>片方向・上限つきの合図</li>
+      <li>「通った事実」だけが信頼になる</li>
+    </div>
+  </div>
+  <p class="body"><em>「閉じた・その場限り・少人数」</em>は広告＝無限フィードのビジネスと真正面から衝突する。だから巨人は本気で寄せてこられない。これがThirdの、模倣されにくい構造的な堀になる。</p>
+  <div class="spacer"></div>
+  <div class="foot-brand">THIRD</div><div class="foot-no">05</div>
+</section>
+
+<!-- ============ 06 安全設計 ============ -->
+<section class="page">
+  <div class="glow" style="width:360px;height:360px;bottom:-12%;right:-10%;"></div>
+  <div class="eyebrow"><span class="no">06</span><span>信頼・安全</span><span class="bar"></span></div>
+  <h2 class="sec">いちばん大事なのは、<em>安全</em>。</h2>
+  <p class="lead">「実際に知り合う」「夜・飲酒・初対面」── 最もリスクの高い組み合わせを、マスター常駐なしで運用する。安全設計はThirdの生命線です。</p>
+  <h3 class="sub">三層の安全装置</h3>
+  <div class="cards">
+    <div class="card"><div class="k">壱</div><h4>通い続けたコスト＝信頼</h4><p>別々の日に5回通わないと常連になれない。出会い目的には割に合わず、<em>通うコスト自体が悪意のフィルター</em>になる。</p></div>
+    <div class="card"><div class="k">弐</div><h4>その場限り</h4><p>つながれるのは今いる常連だけ。店を出れば切れる。店外の付きまとい・DMナンパが構造的に不可能。</p></div>
+    <div class="card"><div class="k">参</div><h4>片方向＋受け手の防御</h4><p>合図は一晩1〜2回・無視は相手に伝わらない・そっとブロック。可視性は安全側がデフォルト。</p></div>
+  </div>
+  <p class="body" style="margin-top:14px;">守るべき最優先のユーザーは、<em>一人で来た人が安心して使えること</em>。性別比が崩れた瞬間に場は死ぬ。可視性デフォルト・受け手の主導権・モニタリングで、その一点を守り抜く。</p>
+  <div class="spacer"></div>
+  <div class="foot-brand">THIRD</div><div class="foot-no">06</div>
+</section>
+
+<!-- ============ 07 仕組みと戦略 ============ -->
+<section class="page">
+  <div class="eyebrow"><span class="no">07</span><span>仕組みと立ち上げ</span><span class="bar"></span></div>
+  <h2 class="sec">通った時間が、信頼になる。</h2>
+  <div class="ringwrap">
+    <svg width="118" height="118" viewBox="0 0 150 150">
+      <circle cx="75" cy="75" r="62" fill="none" stroke="rgba(216,154,78,.14)" stroke-width="6"/>
+      <circle cx="75" cy="75" r="62" fill="none" stroke="url(#g)" stroke-width="6" stroke-linecap="round"
+        stroke-dasharray="389.5" stroke-dashoffset="0" transform="rotate(-90 75 75)"/>
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6B978"/><stop offset="1" stop-color="#A85838"/></linearGradient></defs>
+      <text x="75" y="70" text-anchor="middle" fill="#F2E4CC" font-family="'Shippori Mincho',serif" font-weight="700" font-size="34">5</text>
+      <text x="75" y="92" text-anchor="middle" fill="#A1907A" font-size="10" letter-spacing="2">/ 5 回</text>
+    </svg>
+    <div class="txt"><b>常連認定 ── 別々の日に5回</b><p>各回一定時間以上の滞在で、その店の「常連」に昇格。急いで通っても近道はない。<br>通い続けた事実だけが、ここでの信頼になる。</p></div>
+  </div>
+
+  <h3 class="sub">立ち上げ戦略 ── 「誰もいない部屋」を現実で越える</h3>
+  <p class="body">SNS最大の急所は初日の過疎。これを<em>一店舗集中投入</em>で越える。創業者の行きつけバー一店に薪を集め、リアルな声かけ＋マスターの後押し＋SNS告知で火をつける。広く薄く配らない。</p>
+  <div class="cards" style="margin-top:6px;">
+    <div class="card"><h4>① 満たし切る</h4><p>最初の一店が「開けば誰か常連がいる」状態になるまで集中。</p></div>
+    <div class="card"><h4>② 横展開</h4><p>同エリアの近隣バーへ。次に他エリア・他都市の文化へ。</p></div>
+    <div class="card"><h4>③ 先に検証</h4><p>コンシェルジュ型MVPで、コードの前に思想を現実でテスト。</p></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="foot-brand">THIRD</div><div class="foot-no">07</div>
+</section>
+
+<!-- ============ 08 指標とこれから ============ -->
+<section class="page">
+  <div class="glow" style="width:380px;height:380px;top:-12%;left:-12%;"></div>
+  <div class="eyebrow"><span class="no">08</span><span>指標とこれから</span><span class="bar"></span></div>
+  <h2 class="sec">何が立てば、勝ちか。</h2>
+  <div class="kpi">
+    <div class="lbl">北極星指標</div>
+    <div class="star">行きつけの一店で、<em>別の常連と新しく知り合えた人</em>の割合</div>
+  </div>
+  <p class="body">これが立たなければ、機能をいくら足しても意味がない。補助指標は ── 一店舗あたりの常連密度／チェックイン後に常連リストを開く率／合図→現実合流の発生率／週次の再訪率／安全指標（通報率・性別比）。</p>
+
+  <h3 class="sub">現状 と ロードマップ</h3>
+  <div class="cards">
+    <div class="card"><h4>いま</h4><p>動くWebプロトタイプ（GitHub: shotaro-nagano/Third）。コア体験と安全設計を実装・検証済み。</p></div>
+    <div class="card"><h4>次</h4><p>創業者の行きつけ一店での実地検証。コンシェルジュ型で仮説を確かめる。</p></div>
+    <div class="card"><h4>その先</h4><p>Flutterで本実装（iOS/Android/Web/Windows）。Supabase/Firebaseで認証・DB・リアルタイム。</p></div>
+  </div>
+  <p class="small" style="margin-top:14px;">※ 導入は無料。人が集まるまで価値が出ないため、まず無料で集め切ってから回収する。収益機能は「映え」「つながりっぱなし」を促さないことを必ず確認する。</p>
+  <div class="spacer"></div>
+  <div class="foot-brand">THIRD</div><div class="foot-no">08</div>
+</section>
+
+<!-- ============ クロージング ============ -->
+<section class="page cover">
+  <div class="glow" style="width:520px;height:520px;top:14%;left:50%;transform:translateX(-50%);"></div>
+  <div class="mark"><span class="lantern" style="width:14px;height:14px;"></span><span>THIRD</span></div>
+  <h1 style="font-size:34px;">つながるのは、店にいる間だけ。<br><em>店を出れば、また今度ね。</em></h1>
+  <div class="rule"></div>
+  <p class="tag" style="max-width:420px;margin:0 auto;">行きつけのバーの常連関係を、そのままデジタルに。<br>気軽だけど、安全な常連の場を。</p>
+  <div class="foot">Third　・　紹介企画書　・　2026</div>
+</section>
+
+</body>
+</html>
